@@ -1,5 +1,5 @@
 import LoginPanel from "./components/Login/Login";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import Register from "./components/Register/Register";
 
 

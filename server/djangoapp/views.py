@@ -50,33 +50,36 @@ def logout_request(request):
 # Create a `registration` view to handle sign up request
 @csrf_exempt
 def registration(request):
-    if request.method != 'POST':
-        return JsonResponse({'error': 'Method not allowed'}, status=405)
+    if request.method == 'POST':
+        try:
+            data = json.loads(request.body)
+        except json.JSONDecodeError:
+            return JsonResponse({'error': 'Invalid JSON'}, status=400)
 
-    try:
-        data = json.loads(request.body)
-    except json.JSONDecodeError:
-        return JsonResponse({'error': 'Invalid JSON'}, status=400)
+        username = data.get('userName')
+        password = data.get('password')
+        first_name = data.get('firstName', '')
+        last_name = data.get('lastName', '')
+        email = data.get('email')
 
-    username = data.get('userName')
-    password = data.get('password')
-    first_name = data.get('firstName', '')
-    last_name = data.get('lastName', '')
-    email = data.get('email')
+        if User.objects.filter(username=username).exists():
+            return JsonResponse({'error': 'Username already exists'}, status=400)
 
-    if not username or not password or not email:
-        return JsonResponse({'error': 'Missing required fields'}, status=400)
+        if User.objects.filter(email=email).exists():
+            return JsonResponse({'error': 'Email already in use'}, status=400)
 
-    if User.objects.filter(username=username).exists():
-        return JsonResponse({'error': 'Username already taken'}, status=400)
+        user = User.objects.create_user(
+            username=username,
+            password=password,
+            first_name=first_name,
+            last_name=last_name,
+            email=email
+        )
 
-    if User.objects.filter(email=email).exists():
-        return JsonResponse({'error': 'Email already in use'}, status=400)
+        login(request, user)
+        return JsonResponse({'status': 'success', 'userName': username}, status=201)
 
-    try:
-        validate_password(password)
-    except Exception as e:
-        return JsonResponse({'error': f'Password validation failed: {str(e)}'}, status=400)
+    return JsonResponse({'error': 'Invalid request method'}, status=405)
 
     # Create the user and log them in
     user = User.objects.create_user(
