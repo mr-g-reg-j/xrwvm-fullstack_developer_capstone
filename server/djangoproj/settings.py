@@ -32,6 +32,8 @@ ALLOWED_HOSTS = ['localhost', 'https://github.com/mr-g-reg-j/xrwvm-fullstack_dev
 CSRF_TRUSTED_ORIGINS = [
     'https://github.com/mr-g-reg-j/xrwvm-fullstack_developer_capstone',
     'https://greg-8000.theianext-0-labs-prod-misc-tools-us-east-0.proxy.cognitiveclass.ai',
+    'https://greg-8000.theiadockernext-1-labs-prod-theiak8s-4-tor01.proxy.cognitiveclass.ai/admin/login/?next=/admin/',
+    'https://greg-8000.theiadockernext-1-labs-prod-theiak8s-4-tor01.proxy.cognitiveclass.ai',
 ]
 
 REST_FRAMEWORK = {

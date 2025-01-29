@@ -15,6 +15,7 @@ import json
 from django.views.decorators.csrf import csrf_exempt
 from .populate import initiate
 from django.views.generic import TemplateView
+from .models import CarMake, CarModel
 
 
 
@@ -93,6 +94,28 @@ def registration(request):
 
     return JsonResponse({'userName': username, 'status': 'Authenticated'}, status=201)
 # ...
+def get_cars(request):
+    count = CarMake.objects.filter().count()
+    print(count)
+
+    if count == 0:
+        initiate()
+
+    try:
+        car_models = CarModel.objects.select_related('car_make')
+        cars = []
+
+        for car_model in car_models:
+            cars.append({
+                "CarModel": car_model.name,
+                "CarMake": car_model.car_make.name,
+                "Year": car_model.year.isoformat() if car_model.year else None  # ✅ Fix: Convert date
+            })
+
+        return JsonResponse({"CarModels": cars})  # ✅ Ensure the function always returns a response
+
+    except Exception as e:
+        return JsonResponse({"error": str(e)}, status=500)  # ✅ Catch errors and return a valid response
 
 # # Update the `get_dealerships` view to render the index page with
 # a list of dealerships
