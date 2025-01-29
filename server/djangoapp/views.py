@@ -109,7 +109,7 @@ def get_cars(request):
             cars.append({
                 "CarModel": car_model.name,
                 "CarMake": car_model.car_make.name,
-                "Year": car_model.year.isoformat() if car_model.year else None  # ✅ Fix: Convert date
+                  # ✅ Fix: Convert date
             })
 
         return JsonResponse({"CarModels": cars})  # ✅ Ensure the function always returns a response
