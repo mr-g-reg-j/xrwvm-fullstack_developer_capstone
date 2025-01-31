@@ -28,11 +28,8 @@ SECRET_KEY =\
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost', 'https://github.com/mr-g-reg-j/xrwvm-fullstack_developer_capstone']
+ALLOWED_HOSTS = ['localhost', 'https://greg-8000.theiadockernext-1-labs-prod-theiak8s-4-tor01.proxy.cognitiveclass.ai/']
 CSRF_TRUSTED_ORIGINS = [
-    'https://github.com/mr-g-reg-j/xrwvm-fullstack_developer_capstone',
-    'https://greg-8000.theianext-0-labs-prod-misc-tools-us-east-0.proxy.cognitiveclass.ai',
-    'https://greg-8000.theiadockernext-1-labs-prod-theiak8s-4-tor01.proxy.cognitiveclass.ai/admin/login/?next=/admin/',
     'https://greg-8000.theiadockernext-1-labs-prod-theiak8s-4-tor01.proxy.cognitiveclass.ai',
 ]
 
@@ -135,7 +132,6 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 MEDIA_ROOT = os.path.join(STATIC_ROOT, 'media')
 MEDIA_URL = '/media/'
 
