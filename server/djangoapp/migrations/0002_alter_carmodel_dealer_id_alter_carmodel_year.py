@@ -7,18 +7,24 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('djangoapp', '0001_initial'),
+        ("djangoapp", "0001_initial"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='carmodel',
-            name='dealer_id',
+            model_name="carmodel",
+            name="dealer_id",
             field=models.IntegerField(blank=True, null=True),
         ),
         migrations.AlterField(
-            model_name='carmodel',
-            name='year',
-            field=models.IntegerField(default=2023, validators=[django.core.validators.MaxValueValidator(2023), django.core.validators.MinValueValidator(2015)]),
+            model_name="carmodel",
+            name="year",
+            field=models.IntegerField(
+                default=2023,
+                validators=[
+                    django.core.validators.MaxValueValidator(2023),
+                    django.core.validators.MinValueValidator(2015),
+                ],
+            ),
         ),
     ]
