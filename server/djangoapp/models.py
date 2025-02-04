@@ -62,4 +62,6 @@ class CarModel(models.Model):
     )  # Gasoline, Electric, Hybrid, etc.
 
     def __str__(self):
-        return f"{self.car_make.name} {self.name} ({self.year.year}) - {self.type}"
+        return (
+            f"{self.car_make.name} {self.name} ({self.year.year}) - {self.type}"
+        )

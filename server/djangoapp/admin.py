@@ -1,9 +1,6 @@
 from django.contrib import admin
 from .models import CarMake, CarModel
 
-
-# CarModelInline class (allows adding CarModels within 
-#CarMake in the admin panel)
 class CarModelInline(
     admin.TabularInline
 ):  # or admin.StackedInline for a different layout

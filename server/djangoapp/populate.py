@@ -1,5 +1,5 @@
 from .models import CarMake, CarModel
-from datetime import date
+
 
 
 def initiate():
