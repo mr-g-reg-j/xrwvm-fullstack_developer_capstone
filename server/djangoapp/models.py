@@ -34,11 +34,15 @@ class CarModel(models.Model):
     ]
 
     car_make = models.ForeignKey(CarMake, on_delete=models.CASCADE, related_name="models")  # Many-to-One with CarMake
-    dealer_id = models.IntegerField()  # Refers to dealer in Cloudant database
+    dealer_id = models.IntegerField(blank=True, null=True)  
     name = models.CharField(max_length=100)  # Car model name
     type = models.CharField(max_length=20, choices=CAR_TYPE_CHOICES)  # Car type (limited choices)
-    year = models.DateField()  # Manufacturing year
-    
+    year = models.IntegerField(
+        default=2023,
+        validators=[
+            MaxValueValidator(2023),
+            MinValueValidator(2015)  # Manufacturing year
+    ]) 
     # Optional fields
     horsepower = models.IntegerField(blank=True, null=True)  # Engine power
     fuel_type = models.CharField(max_length=50, blank=True, null=True)  # Gasoline, Electric, Hybrid, etc.

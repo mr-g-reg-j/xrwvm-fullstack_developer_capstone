@@ -98,25 +98,17 @@ def registration(request):
 def get_cars(request):
     count = CarMake.objects.filter().count()
     print(count)
-
-    if count == 0:
+    if (count == 0):
         initiate()
+    car_models = CarModel.objects.select_related('car_make')
+    cars = []
+    for car_model in car_models:
+        cars.append({
+            "CarModel": car_model.name,
+            "CarMake": car_model.car_make.name
+        })
+    return JsonResponse({"CarModels": cars})
 
-    try:
-        car_models = CarModel.objects.select_related('car_make')
-        cars = []
-
-        for car_model in car_models:
-            cars.append({
-                "CarModel": car_model.name,
-                "CarMake": car_model.car_make.name,
-                  # ✅ Fix: Convert date
-            })
-
-        return JsonResponse({"CarModels": cars})  # ✅ Ensure the function always returns a response
-
-    except Exception as e:
-        return JsonResponse({"error": str(e)}, status=500)  # ✅ Catch errors and return a valid response
 
 # # Update the `get_dealerships` view to render the index page with
 #Update the `get_dealerships` render list of dealerships all by default, particular state if state is passed
