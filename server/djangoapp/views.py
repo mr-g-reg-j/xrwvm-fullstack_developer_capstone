@@ -1,8 +1,8 @@
 # Uncomment the required imports before adding the code
-
-from django.shortcuts import render
+from django.http import JsonResponse
 from django.contrib.auth.models import User
 from django.contrib.auth import logout
+
 from django.http import JsonResponse
 from django.contrib.auth import login, authenticate
 import logging
@@ -17,10 +17,6 @@ from .restapis import get_request, analyze_review_sentiments, post_review
 logger = logging.getLogger(__name__)
 
 
-# Create your views here.
-
-
-# Create a `login_request` view to handle sign in request
 @csrf_exempt
 def login_user(request):
     # Get username and password from request.POST dictionary
@@ -60,10 +56,14 @@ def registration(request):
         email = data.get("email")
 
         if User.objects.filter(username=username).exists():
-            return JsonResponse({"error": "Username already exists"}, status=400)
+            return (
+                JsonResponse({"error": "Username already exists"}, status=400)
+            )
 
         if User.objects.filter(email=email).exists():
-            return JsonResponse({"error": "Email already in use"}, status=400)
+            return (
+                JsonResponse({"error": "Email already in use"}, status=400)
+            )
 
         user = User.objects.create_user(
             username=username,
@@ -74,24 +74,14 @@ def registration(request):
         )
 
         login(request, user)
-        return JsonResponse({"status": "success", "userName": username}, status=201)
+        return (
+            JsonResponse({"status": "success", "userName": username}, status=201)
+        )
 
-    return JsonResponse({"error": "Invalid request method"}, status=405)
-
-    # Create the user and log them in
-    user = User.objects.create_user(
-        username=username,
-        password=password,
-        first_name=first_name,
-        last_name=last_name,
-        email=email,
+    return (
+             JsonResponse({"error": "Invalid request method"}, status=405)
     )
-    login(request, user)
 
-    return JsonResponse({"userName": username, "status": "Authenticated"}, status=201)
-
-
-# ...
 def get_cars(request):
     count = CarMake.objects.filter().count()
     print(count)
