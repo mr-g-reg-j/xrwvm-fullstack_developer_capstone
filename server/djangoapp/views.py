@@ -139,21 +139,21 @@ def add_review(request):
     try:
         post_review(data)
         return JsonResponse({"status": 200})
-    except requests.exceptions.RequestException as e:  
+    except requests.exceptions.RequestException as e:
         logger.error(f"Request error: {e}")
         return JsonResponse(
             {"status": 401, "message": "Request failed"},
             status=401
         )
-    except json.JSONDecodeError as e:  
+    except json.JSONDecodeError as e:
         logger.error(f"JSON error: {e}")
         return JsonResponse(
             {"status": 401, "message": "Invalid JSON"},
             status=401
         )
-    except Exception as e:  
+    except Exception as e:
         logger.error(f"Unexpected error: {e}")
         return JsonResponse(
             {"status": 401, "message": "Unexpected server error"},
             status=401
-        )  
+        )
