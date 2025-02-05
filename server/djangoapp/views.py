@@ -66,9 +66,7 @@ def registration(request):
         email = data.get("email")
 
         if User.objects.filter(username=username).exists():
-            return JsonResponse(
-                {"error": "Username already exists"}, status=400
-            )
+            return JsonResponse({"error": "Username already exists"}, status=400)
 
         if User.objects.filter(email=email).exists():
             return JsonResponse({"error": "Email already in use"}, status=400)
@@ -82,9 +80,7 @@ def registration(request):
         )
 
         login(request, user)
-        return JsonResponse(
-            {"status": "success", "userName": username}, status=201
-        )
+        return JsonResponse({"status": "success", "userName": username}, status=201)
 
     return JsonResponse({"error": "Invalid request method"}, status=405)
 
@@ -98,9 +94,7 @@ def registration(request):
     )
     login(request, user)
 
-    return JsonResponse(
-        {"userName": username, "status": "Authenticated"}, status=201
-    )
+    return JsonResponse({"userName": username, "status": "Authenticated"}, status=201)
 
 
 # ...
@@ -112,9 +106,7 @@ def get_cars(request):
     car_models = CarModel.objects.select_related("car_make")
     cars = []
     for car_model in car_models:
-        cars.append(
-            {"CarModel": car_model.name, "CarMake": car_model.car_make.name}
-        )
+        cars.append({"CarModel": car_model.name, "CarMake": car_model.car_make.name})
     return JsonResponse({"CarModels": cars})
 
 
@@ -162,8 +154,6 @@ def add_review(request):
             response = post_review(data)
             return JsonResponse({"status": 200})
         except:
-            return JsonResponse(
-                {"status": 401, "message": "Error in posting review"}
-            )
+            return JsonResponse({"status": 401, "message": "Error in posting review"})
     else:
         return JsonResponse({"status": 403, "message": "Unauthorized"})

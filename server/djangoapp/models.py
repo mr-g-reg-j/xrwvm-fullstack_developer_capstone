@@ -1,6 +1,7 @@
 # Uncomment the following imports before adding the Model code
 
 from django.db import models
+
 # from django.utils.timezone import now
 # from datetime import date
 from django.core.validators import MaxValueValidator, MinValueValidator
@@ -10,9 +11,7 @@ class CarMake(models.Model):
     name = models.CharField(
         max_length=100, unique=True
     )  # Car make name (e.g., Toyota, Ford)
-    description = models.TextField(
-        blank=True, null=True
-    )  # Optional description
+    description = models.TextField(blank=True, null=True)  # Optional description
     country = models.CharField(
         max_length=50, blank=True, null=True
     )  # Country of origin
@@ -62,7 +61,4 @@ class CarModel(models.Model):
     )  # Gasoline, Electric, Hybrid, etc.
 
     def __str__(self):
-        return (
-            f"{self.car_make.name} {self.name} ({self.year.year}) - {self.type}"
-        )
-    
+        return f"{self.car_make.name} {self.name} ({self.year.year}) - " f"{self.type}"

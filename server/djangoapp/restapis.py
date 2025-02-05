@@ -26,7 +26,7 @@ def get_request(endpoint, **kwargs):
         response = requests.get(request_url)
         return response.json()
     except requests.exceptions.RequestException as e:
-    # This catches network-related errors like timeouts, etc.
+        # This catches network-related errors like timeouts, etc.
         print(f"Network exception occurred: {e}")
         return None  # Ensure function still returns a value
 
@@ -50,6 +50,5 @@ def post_review(data_dict):
         print(response.json())
         return response.json()
     except requests.exceptions.RequestException as e:
-    print(f"Network exception occurred: {e}")
-    return None  # Ensure function returns a value even on failure
-
+        print(f"Network exception occurred: {e}")
+        return None  # Ensure function returns a value even on failure
