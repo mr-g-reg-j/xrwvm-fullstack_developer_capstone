@@ -1,5 +1,6 @@
-export default [
+module.exports = [
   {
+    ignores: ["node_modules/", "dist/", "build/"], // ✅ Ignore unnecessary directories
     files: ["**/*.js"],
     languageOptions: {
       ecmaVersion: "latest"
