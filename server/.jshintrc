@@ -4,6 +4,7 @@
     "eqeqeq": true,
     "undef": true,
     "unused": true,
-    "strict": "global"
+    "strict": "global",
+    "node": true  // ✅ Enables Node.js global variables like require/module
   }
   
