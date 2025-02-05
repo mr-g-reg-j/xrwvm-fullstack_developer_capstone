@@ -27,8 +27,8 @@ def get_request(endpoint, **kwargs):
         return response.json()
     except requests.exceptions.RequestException as e:
     # This catches network-related errors like timeouts, etc.
-    print(f"Network exception occurred: {e}")
-    return None  # Ensure function still returns a value
+        print(f"Network exception occurred: {e}")
+        return None  # Ensure function still returns a value
 
 
 def analyze_review_sentiments(text):
