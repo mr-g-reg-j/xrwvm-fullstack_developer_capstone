@@ -2,7 +2,7 @@
 from django.http import JsonResponse
 from django.contrib.auth.models import User
 from django.contrib.auth import logout
-
+import requests
 
 from django.contrib.auth import login, authenticate
 import logging
@@ -78,7 +78,6 @@ def registration(request):
             {"status": "success", "userName": username},
             status=201
         )
-        
 
     return (
              JsonResponse({"error": "Invalid request method"}, status=405)
@@ -137,12 +136,24 @@ def get_dealer_details(request, dealer_id):
 def add_review(request):
     if not request.user.is_anonymous:
         data = json.loads(request.body)
-        try:
-            post_review(data)
-            return JsonResponse({"status": 200})
-        except requests.exceptions.RequestException as e:  # Catch network-related errors
-            return JsonResponse({"status": 401, "message": f"Request error: {e}"})
-        except json.JSONDecodeError as e:  # Catch JSON decoding errors
-            return JsonResponse({"status": 401, "message": f"JSON error: {e}"})
-        except Exception as e:  # Catch any other unexpected errors
-            return JsonResponse({"status": 401, "message": f"Unexpected error: {e}"})
+    try:
+        post_review(data)
+        return JsonResponse({"status": 200})
+    except requests.exceptions.RequestException as e:  
+        logger.error(f"Request error: {e}")
+        return JsonResponse(
+            {"status": 401, "message": "Request failed"},
+            status=401
+        )
+    except json.JSONDecodeError as e:  
+        logger.error(f"JSON error: {e}")
+        return JsonResponse(
+            {"status": 401, "message": "Invalid JSON"},
+            status=401
+        )
+    except Exception as e:  
+        logger.error(f"Unexpected error: {e}")
+        return JsonResponse(
+            {"status": 401, "message": "Unexpected server error"},
+            status=401
+        )  
