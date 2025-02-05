@@ -74,10 +74,11 @@ def registration(request):
         )
 
         login(request, user)
-        return (
-            JsonResponse({"status": "success", "userName": username}, 
-            status=201)
+        return JsonResponse(
+            {"status": "success", "userName": username},
+            status=201
         )
+        
 
     return (
              JsonResponse({"error": "Invalid request method"}, status=405)
@@ -137,10 +138,11 @@ def add_review(request):
     if not request.user.is_anonymous:
         data = json.loads(request.body)
         try:
-            response = post_review(data)
+            post_review(data)
             return JsonResponse({"status": 200})
-        except:
-            return JsonResponse({"status": 401, "message": "Error in posting review"}
-            )
-    else:
-        return JsonResponse({"status": 403, "message": "Unauthorized"})
+        except requests.exceptions.RequestException as e:  # Catch network-related errors
+            return JsonResponse({"status": 401, "message": f"Request error: {e}"})
+        except json.JSONDecodeError as e:  # Catch JSON decoding errors
+            return JsonResponse({"status": 401, "message": f"JSON error: {e}"})
+        except Exception as e:  # Catch any other unexpected errors
+            return JsonResponse({"status": 401, "message": f"Unexpected error: {e}"})
